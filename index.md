@@ -1,4 +1,4 @@
-## 菜鸟配置深度学习环境(Anaconda5.2+cuda10.2+Pytorch1.10)及遇到的问题
+## 菜鸟配置深度学习环境(Anaconda5.2+cuda10.2+Pytorch1.7)及遇到的问题
 
 第一次记录。。
 
@@ -11,29 +11,53 @@
 ```
 conda create -n pytorch python=3.6
 ```
-### Pytorch 1.10 安装
+### Pytorch 1.7 安装
 
-在 `https://pytorch.org/` 选择对应的平台，注意这里的cuda版本
+在安装过程中，尝试用官网的方法安装，发现速度太慢，遂放弃。
 
-![image](https://user-images.githubusercontent.com/67214810/143828919-09202ccf-caf6-4870-ba91-44aecee5390a.png)
+尝试用清华镜像源的方法安装，发现安装的是cpu版本的，torch.cuda.is_available()返回的是False，遂放弃。
 
-在`Anaconda Prompt`中输入以下命令，创建python3.6环境
+最后整理看到的一种方法如下，可以成功解决问题。
+
+在 https://download.pytorch.org/whl/torch_stable.html 选择对应的平台，注意这里的cuda版本
+
+我选的是
+
+`cu102/torchvision-0.6.0-cp36-cp36m-win_amd64.whl`，cuda 10.2版本，torchvision 0.6版本，python 3.6版本
+
+`cu102/torch-1.7.0-cp36-cp36m-win_amd64.whl`，cuda 10.2版本，torch 1.7版本，python 3.6版本
+
+把下载好的文件复制到Anaconda的位置`Anaconda\pkgs`下。
+
+在`Anaconda Prompt`中运行下面命令，安装上面两个文件。
+
 ```
-conda create -n pytorch python=3.6
+pip install 文件名
+pip install 文件名
 ```
+
+安装后`torch.cuda.is_available()=True`
 
 
 
 
 ### CUDA 10.2 安装
 
-在 `https://developer.nvidia.com/cuda-toolkit-archive` 选择'CUDA Toolkit 10.2'，进入选择对应的系统平台，下载
+在 https://developer.nvidia.com/cuda-toolkit-archive 选择'CUDA Toolkit 10.2'，进入选择对应的系统平台，下载
 
 ![image](https://user-images.githubusercontent.com/67214810/143830499-003160ab-49ff-465c-87e7-72aaf96bef19.png)
 
 安装过程我都设为默认的，一直点下一步
 
+### Jupyter 配置
 
+在`Anaconda Prompt`中`pytorch`下运行
+
+```
+conda install nb_conda_kernels
+```
+
+安装Jupyter所需配置
 
 
 ### 配置好torch环境，在Pycharm里import torch报错
